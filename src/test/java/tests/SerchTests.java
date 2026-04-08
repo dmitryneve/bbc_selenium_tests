@@ -74,9 +74,21 @@ public class SerchTests extends BaseTest {
 		}
 		
 		
-		
-		
 
+			
+		}
+	@Test
+	
+	public void searchForItemThatFails() {
+		HomePage home = new HomePage(driver);
+		home.clickHamburgerButton();
+		home.searchForWitSearchButton("FailedTest");
+		
+		log.info("This test will fail intentionally to demonstrate screenshot");
+		Assert.fail("This test is designed to fail for screenshot demonstration");
+		
+		
+		
 		
 	}
 	}

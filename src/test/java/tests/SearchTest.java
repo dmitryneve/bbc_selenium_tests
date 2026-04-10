@@ -1,18 +1,29 @@
 package tests;
 
-import base.BasePage;
+
 import base.BaseTest;
 import pages.HomePage;
 import java.time.Duration;
 import java.util.List;
-
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SerchTests extends BaseTest {
+public class SearchTest extends BaseTest {
 
+	@DataProvider(name = "searchForKeyWords") 
+	public Object[][] provideKeyWords() { 
+		return new Object[][] { 
+			{"travel"},
+			{"arts"},
+			{"culture"}
+			
+		};
+	}
 	@Test
 
 	public void openWebsite() {
@@ -91,7 +102,29 @@ public class SerchTests extends BaseTest {
 		
 		
 	}
+	@Story("BBC Search")
+	@Description("Search by the keyWords")
+	@Test(dataProvider = "searchForKeyWords") 
+	
+	public void searchForMultipleKeyWords(String keyword) {
+			HomePage home = new HomePage(driver);
+			
+			home.clickHamburgerButton();
+			home.searchForWitSearchButton(keyword);
+			
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.urlContains("search"));
+			
+			String currentUrl = driver.getCurrentUrl();
+			Assert.assertTrue(currentUrl.contains(keyword.toLowerCase()),
+					"Search failed for keyword: " + keyword);
+			Assert.assertTrue(home.hasSearchResults(), "No results for: " + keyword);
+			log.info("Search successful for: " + keyword);
+			
+			
+		}
 	}
+	
 	
 
 

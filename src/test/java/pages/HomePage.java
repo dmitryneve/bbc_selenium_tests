@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import base.BasePage;
-import utils.ConfigReader;
+
 
 
 public class HomePage extends BasePage {
@@ -21,7 +21,7 @@ public class HomePage extends BasePage {
 	private By hamburgerButton = By.cssSelector("button[aria-label='Open menu']");
     private By searchField = By.cssSelector("input[data-testid='search-input-field']");     
     private By searchButton = By.cssSelector("button[data-testid='search-input-search-button']");
-    private By searchResultTitle = By.cssSelector("h2[data-testid='card-headline']");
+    
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -70,5 +70,8 @@ public class HomePage extends BasePage {
 			}
 			return titles;
 			
+		}
+		public boolean hasSearchResults() { 
+			return !getSearchResultTitles().isEmpty();
 		}
 }
